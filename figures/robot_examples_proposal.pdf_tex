@@ -54,11 +54,13 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{robot_examples_proposal.pdf}}%
-    \put(0.1050396,0.04019838){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(a) 2-dof robot\end{tabular}}}}%
-    \put(0.10426506,0.01231485){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}palletizer\end{tabular}}}}%
-    \put(0.54188093,0.04174755){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(b) 4-dof robot\end{tabular}}}}%
-    \put(0.54110639,0.01386402){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}palletizer\end{tabular}}}}%
-    \put(0.7920578,0.04484559){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(c) 3-dof parallel\end{tabular}}}}%
-    \put(0.79128321,0.01696206){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}robot\end{tabular}}}}%
+    \put(0.02266986,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{a}) 6-DoF\end{tabular}}}}%
+    \put(0.27857831,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{b}) 4-DoF\end{tabular}}}}%
+    \put(0.70545276,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{d}) 3-DoF\end{tabular}}}}%
+    \put(0.5280033,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{c}) 2-DoF\end{tabular}}}}%
+    \put(0.02300872,0.01386515){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}industrial robot\end{tabular}}}}%
+    \put(0.27891719,0.0142571){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}robot palletizer\end{tabular}}}}%
+    \put(0.50450186,0.01425794){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}robot palletizer\end{tabular}}}}%
+    \put(0.7078382,0.01425794){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}parallel rob.\end{tabular}}}}%
   \end{picture}%
 \endgroup%
