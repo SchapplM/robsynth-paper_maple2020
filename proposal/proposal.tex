@@ -1,6 +1,5 @@
-% This is samplepaper.tex, a sample chapter demonstrating the
-% LLNCS macro package for Springer Computer Science proceedings;
-% Version 2.20 of 2017/10/04
+% !TEX encoding = UTF-8 Unicode
+% !TEX spellcheck = en_US
 %
 \documentclass[runningheads]{llncs}
 %
@@ -18,14 +17,15 @@
 
 \begin{document}
 %
-\title{A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots\thanks{Supported by German Research Foundation (DFG, grant OR 196/33-1), Federal Ministry of Education and Research of Germany (BMBF, grant 16SV6175) and European Union's Horizon 2020 research and innovation programme (grant 688857).}}
+\title{A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots}%\thanks{Supported by German Research Foundation (DFG, grant OR 196/33-1), Federal Ministry of Education and Research of Germany (BMBF, grant 16SV6175) and European Union's Horizon 2020 research and innovation programme (grant 688857).}}
 %
 \titlerunning{Maple Toolchain for Robot Dynamics}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{Moritz Schappler\inst{1}\orcidID{0000-0001-7952-7363} \and \\
-Tobias Ortmaier\inst{1}\orcidID{0000-0003-1644-3685}}
+%\author{Moritz Schappler\inst{1}\orcidID{0000-0001-7952-7363} \and \\
+%Tobias Ortmaier\inst{1}\orcidID{0000-0003-1644-3685}}
+\author{Moritz Schappler\inst{1} \and Tobias Ortmaier\inst{1}}
 %
 \authorrunning{M. Schappler et al.}
 % First names are abbreviated in the running head.
@@ -44,16 +44,34 @@ Institute of Mechatronic Systems, Leibniz University Hannover, Hannover, Germany
 %\keywords{Rigid body dynamics \and Robotics \and Symbolic code \and Toolchain.}
 %\end{abstract}
 
-\begin{itemize}
-\item Die Gleichungen der Starrkörperdynamik von Robotern sollten zur schnellen Simulation von Systemen und für erweiterte Analysen in symbolischer Form aufgestellt werden.
-\item Für einen systematischen Vergleich aller möglicher Roboterstrukturen für eine gegebene Aufgabe werden Datenbanken von hunderten Robotermodellen automatisch erzeugt.
-\item Zur Integration in das wissenschaftliches Projekt ist eine Open-Source-Lösung für die Modellgenerierung wünschenswert, da eine geschlossene Lösung nicht erweiterbar ist. Ebenso ist ein hoher Automatisierungsgrad ohne manuelle Nacharbeit und eine direkte Testbarkeit der Ergebnisse wichtig.
-\item Wir stellen eine neue Toolchain vor, mit der die Dynamik für verschiedene Typen von Roboter-Manipulatoren in symbolischer Form aufgestellt werden kann. Neben seriellen können hybride (Fig.\,\ref{fig:robot_examples}~a,b) und parallele Kinematiken (Fig.\,\ref{fig:robot_examples}~c) gelöst werden.
-\item Die Implementierung in Maple und Bash-Skripte ist Open Source und hat das Ziel, Matlab-Funktionen zu generieren, mit denen weitere Analysen durchgeführt werden können. Der Code ist ebenfalls direkt in modellbasierten Regelungen basierend auf Simulink (Etherlab), SPS oder ROS einsetzbar.
-\item Die Besonderheit der Toolbox gegenüber eines eher manuellen Prozesses ist die Erzeugung einer Stand-Alone-Testumgebung, bei der jede Funktion automatisch validiert wird. Dafür werden mathematische Zusammenhänge der Starrkörperdynamik genutzt (Energiekonsistenz, Implementierung verschiedener Verfahren wie Lagrange und Newton-Euler für serielle Ketten, D'Alembert und Lagrange für hybride Ketten)
-\item Im Vortrag wird besonders auf die Implementierung der Toolchain eingegangen. Es gibt praktische Hinweise für die Nutzung von Maple mit einer Software-Versionsverwaltung zur Erreichung einer hohen Software-Qualität.
-\item In der Zukunft kann die Toolchain auch zur Erzeugung von Testfällen für die symbolische Vereinfachung in Maple genutzt werden.
-\end{itemize}
+%\begin{itemize}
+%\item Die Gleichungen der Starrkörperdynamik von Robotern sollten zur schnellen Simulation von Systemen und für erweiterte Analysen in symbolischer Form aufgestellt werden.
+The determination of the equations of motion in symbolic form is a common problem in robotics engineering.
+Using the symbolic form of the rigid body dynamics enables fast forward and inverse dynamics simulations and allows further analysis of a system.
+%\item Für einen systematischen Vergleich aller möglicher Roboterstrukturen für eine gegebene Aufgabe werden Datenbanken von hunderten Robotermodellen automatisch erzeugt.
+For a systematic comparison of all possible robot structures for a task given by degrees of freedom and an end effector trajectory, a database with hundreds of robot models is automatically generated.
+With the models in the database necessary actuator forces or energy consumption of all robots is compared for the given trajectory and the best robot can be recommended to the user of the toolbox.
+
+Due to the high number of simulations to run for a suitable comparison, computational efficiency is the core of the project.
+%\item Zur Integration in das wissenschaftliches Projekt ist eine Open-Source-Lösung für die Modellgenerierung wünschenswert, da eine geschlossene Lösung nicht erweiterbar ist. Ebenso ist ein hoher Automatisierungsgrad ohne manuelle Nacharbeit und eine direkte Testbarkeit der Ergebnisse wichtig.
+The toolchain for generating the dynamics models in the database should be editable (i.\,e. open source) to be able to test new features such as the exploitation of sparsity of parameter dependency to reduce computation time.
+Further a high automation without manual processing single models is favorable as well as high reliability of the results.
+%\item Wir stellen eine neue Toolchain vor, mit der die Dynamik für verschiedene Typen von Roboter-Manipulatoren in symbolischer Form aufgestellt werden kann. Neben seriellen können hybride (Fig.\,\ref{fig:robot_examples}~a,b) und parallele Kinematiken (Fig.\,\ref{fig:robot_examples}~c) gelöst werden.
+
+In this paper, we present a \textsc{Maple} toolchain for generating the rigid body dynamics in symbolic for with the given requirements.
+Additional to the standard case of serial-link kinematics, also hybrid (in Fig.\,\ref{fig:robot_examples}~a,b) and parallel structures can be solved (see Fig.\,\ref{fig:robot_examples}~c).
+%\item Die Implementierung in Maple und Bash-Skripte ist Open Source und hat das Ziel, Matlab-Funktionen zu generieren, mit denen weitere Analysen durchgeführt werden können. Der Code ist ebenfalls direkt in modellbasierten Regelungen basierend auf Simulink (Etherlab), SPS oder ROS einsetzbar.
+
+%\item Die Besonderheit der Toolbox gegenüber eines eher manuellen Prozesses ist die Erzeugung einer Stand-Alone-Testumgebung, bei der jede Funktion automatisch validiert wird. Dafür werden mathematische Zusammenhänge der Starrkörperdynamik genutzt (Energiekonsistenz, Implementierung verschiedener Verfahren wie Lagrange und Newton-Euler für serielle Ketten, D'Alembert und Lagrange für hybride Ketten)
+The symbolic code is implemented with \textsc{Maple} worksheets in a modular structure.
+The peculiarity lies in the framework of \textsc{Bash} scripts controlling the full workflow of the toolchain:
+The optimized Matlab code generated with \textsc{Maple} \texttt{codegen} is automatically transformed to function files with proper documentation and input assertions.
+A \textsc{Matlab/Simulink} unit test framework is automatically generated from template files and all functions for each robot are completely tested.
+%\item Im Vortrag wird besonders auf die Implementierung der Toolchain eingegangen. Es gibt praktische Hinweise für die Nutzung von Maple mit einer Software-Versionsverwaltung zur Erreichung einer hohen Software-Qualität.
+%\item In der Zukunft kann die Toolchain auch zur Erzeugung von Testfällen für die symbolische Vereinfachung in Maple genutzt werden.
+%\end{itemize}
+The presentation will highlight the implementation of the toolchain regarding using software version control (\texttt{git}) and achieving high quality by using unit tests.
+In the future, the results may be used to provide test cases for improving the symbolic simplification in \textsc{Maple}.
 
 \begin{figure}[htb]
 	\input{../figures/robot_examples_proposal.pdf_tex}
