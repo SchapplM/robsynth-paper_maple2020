@@ -5,23 +5,27 @@
 \documentclass[runningheads]{llncs}
 %
 \usepackage{graphicx}
+\usepackage{color}
+\graphicspath{{../figures/}}
+\usepackage[utf8]{inputenc}
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
 %
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
-% \renewcommand\UrlFont{\color{blue}\rmfamily}
+\usepackage{url}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \begin{document}
 %
-\title{A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots\thanks{Supported by DFG (grant x), BMBF (grant y) and EU Horizon 2020 (grant z).}}
+\title{A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots\thanks{Supported by German Research Foundation (DFG, grant OR 196/33-1), Federal Ministry of Education and Research of Germany (BMBF, grant 16SV6175) and European Union's Horizon 2020 research and innovation programme (grant 688857).}}
 %
 \titlerunning{Maple Toolchain for Robot Dynamics}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{Moritz Schappler\inst{1}\orcidID{0000-0001-7952-7363} \and
-Tobias Ortmaier\inst{1}}
+\author{Moritz Schappler\inst{1}\orcidID{0000-0001-7952-7363} \and \\
+Tobias Ortmaier\inst{1}\orcidID{0000-0003-1644-3685}}
 %
 \authorrunning{M. Schappler et al.}
 % First names are abbreviated in the running head.
@@ -33,19 +37,29 @@ Institute of Mechatronic Systems, Leibniz University Hannover, Hannover, Germany
 %
 \maketitle              % typeset the header of the contribution
 %
-\begin{abstract}
-The abstract should briefly summarize the contents of the paper in
-150--250 words.
+%\begin{abstract}
+%The abstract should briefly summarize the contents of the paper in
+%150--250 words.
 
-\keywords{First keyword  \and Second keyword \and Another keyword.}
-\end{abstract}
-%
-%
-%
-\section{First Section}
-\subsection{A Subsection Sample}
+%\keywords{Rigid body dynamics \and Robotics \and Symbolic code \and Toolchain.}
+%\end{abstract}
 
-here comes the content.
+\begin{itemize}
+\item Die Gleichungen der Starrkörperdynamik von Robotern sollten zur schnellen Simulation von Systemen und für erweiterte Analysen in symbolischer Form aufgestellt werden.
+\item Für einen systematischen Vergleich aller möglicher Roboterstrukturen für eine gegebene Aufgabe werden Datenbanken von hunderten Robotermodellen automatisch erzeugt.
+\item Zur Integration in das wissenschaftliches Projekt ist eine Open-Source-Lösung für die Modellgenerierung wünschenswert, da eine geschlossene Lösung nicht erweiterbar ist. Ebenso ist ein hoher Automatisierungsgrad ohne manuelle Nacharbeit und eine direkte Testbarkeit der Ergebnisse wichtig.
+\item Wir stellen eine neue Toolchain vor, mit der die Dynamik für verschiedene Typen von Roboter-Manipulatoren in symbolischer Form aufgestellt werden kann. Neben seriellen können hybride (Fig.\,\ref{fig:robot_examples}~a,b) und parallele Kinematiken (Fig.\,\ref{fig:robot_examples}~c) gelöst werden.
+\item Die Implementierung in Maple und Bash-Skripte ist Open Source und hat das Ziel, Matlab-Funktionen zu generieren, mit denen weitere Analysen durchgeführt werden können. Der Code ist ebenfalls direkt in modellbasierten Regelungen basierend auf Simulink (Etherlab), SPS oder ROS einsetzbar.
+\item Die Besonderheit der Toolbox gegenüber eines eher manuellen Prozesses ist die Erzeugung einer Stand-Alone-Testumgebung, bei der jede Funktion automatisch validiert wird. Dafür werden mathematische Zusammenhänge der Starrkörperdynamik genutzt (Energiekonsistenz, Implementierung verschiedener Verfahren wie Lagrange und Newton-Euler für serielle Ketten, D'Alembert und Lagrange für hybride Ketten)
+\item Im Vortrag wird besonders auf die Implementierung der Toolchain eingegangen. Es gibt praktische Hinweise für die Nutzung von Maple mit einer Software-Versionsverwaltung zur Erreichung einer hohen Software-Qualität.
+\item In der Zukunft kann die Toolchain auch zur Erzeugung von Testfällen für die symbolische Vereinfachung in Maple genutzt werden.
+\end{itemize}
+
+\begin{figure}[htb]
+	\input{../figures/robot_examples_proposal.pdf_tex}
+	\caption{Examples of different robots with dynamics equations in symbolic form.}
+	\label{fig:robot_examples}
+\end{figure} 
 
 %
 % ---- Bibliography ----
@@ -53,7 +67,7 @@ here comes the content.
 % BibTeX users should specify bibliography style 'splncs04'.
 % References will then be sorted and formatted in the correct style.
 %
-\bibliographystyle{splncs04}
-\bibliography{references}
+%\bibliographystyle{splncs04}
+%\bibliography{references}
 
 \end{document}
