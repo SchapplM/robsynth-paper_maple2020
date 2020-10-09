@@ -8,7 +8,7 @@ clear
 % close all
 figure_dir = fileparts(which('robot_examples.m'));
 
-for iRob = 1:4
+for iRob = 1:8
   f = figure(2);clf;
   hold on;
   grid off;
@@ -18,7 +18,7 @@ for iRob = 1:4
   set(get(gca, 'XAxis'), 'visible', 'off');
   set(get(gca, 'YAxis'), 'visible', 'off');
   set(get(gca, 'ZAxis'), 'visible', 'off');
-  %% 3D-Palletizer
+  %% 3D-Palletizer (3 Loops)
   if iRob == 1
     % See systems/palh1m1/palh1m1_test.m
     % in https://github.com/SchapplM/robsynth-serhybroblib
@@ -31,10 +31,23 @@ for iRob = 1:4
     s_plot = struct( 'ks', [], 'straight', 0);
     RS_TE.plot( q, s_plot );
     view([-20, 20])
-    name = sprintf('palletizer_3d');
+    name = sprintf('palletizer_3d_3loops');
+  end
+  %% 3D-Palletizer (2 Loops)
+  if iRob == 2
+    % See systems/palh1m1/palh1m1_test.m
+    % in https://github.com/SchapplM/robsynth-serhybroblib
+    RS_TE = hybroblib_create_robot_class('palh3m1', 'TE', 'palh3m1Bsp1');
+    % Mark passive joints as active because of graphically overlapping
+    RS_TE.MDH.mu(7) = true;
+    q = RS_TE.qref;
+    s_plot = struct( 'ks', [], 'straight', 0);
+    RS_TE.plot( q, s_plot );
+    view([-20, 20])
+    name = sprintf('palletizer_3d_2loops');
   end
   %% 2D-Palletizer
-  if iRob == 2
+  if iRob == 3
     % See systems/picker2Dm1/picker2Dm1_test.m
     % in https://github.com/SchapplM/robsynth-serhybroblib
     RS = hybroblib_create_robot_class('picker2Dm1', 'TE', 'TSR2040');
@@ -44,8 +57,8 @@ for iRob = 1:4
     view([-12, 56])
     name = sprintf('palletizer_2d');
   end
-  %% Serial Robot
-  if iRob == 3
+  %% Serial Industrial Robot
+  if iRob == 4
     RS = serroblib_create_robot_class('S6RRRRRR10V2', 'S6RRRRRR10V2_KUKA1');
     s_plot = struct( 'ks', [], 'straight', 0);
     q = [0; 90; 0; 0; 90; 0]*pi/180;
@@ -53,8 +66,34 @@ for iRob = 1:4
     view(3);
     name = sprintf('industrial_robot_6dof');
   end
-  %% Parallel Robot
-  if iRob == 4
+  %% SCARA
+  if iRob == 5
+    RS = serroblib_create_robot_class('S4RRPR1', 'S4RRPR1_KUKA1');
+    RS.DesPar.joint_offset = [0;0;-50e-3;0];
+    RS.update_EE([0;0;-100e-3]);
+    s_plot = struct( 'ks', [], 'straight', 0);
+    q = [0; 0; -250e-3; 0];
+    RS.plot( q, s_plot );
+    view(3);
+    name = sprintf('scara');
+  end
+  %% Serial Palletizing Robot
+  if iRob == 6
+    % Use model with kinematic constraints for the palletizing task
+    RS = hybroblib_create_robot_class('palh2m1', 'DE', 'palh1m2KR1');
+    % Set dependent joint as active because real robot has a motor there
+    RS.MDH.mu(4) = true;
+    % alternative: serial robot model
+%     RS = serroblib_create_robot_class('S5RRRRR1', 'S5RRRRR1_KUKA1');
+%     q = [0; -90+15; 90-15; 0; 0]*pi/180;
+    s_plot = struct( 'ks', [], 'straight', 0);
+    q = [0; -90-15; 90+45; 0;]*pi/180;
+    RS.plot( q, s_plot );
+    view(3);
+    name = sprintf('palletizer_serial_5dof');
+  end
+  %% Parallel Robot 1 (3PRRU)
+  if iRob == 7
     RP = parroblib_create_robot_class('P3PRRRR8V2G4P2A1', 1, 1);
     RP.align_base_coupling(4, [0.12;pi]);
     RP.align_platform_coupling(2, 0.1);
@@ -84,6 +123,34 @@ for iRob = 1:4
     delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
     view([-22, 20])
   end
+  %% Parallel Robot 2 (3RUU, Delta)
+  if iRob == 8
+    % Siehe ParRob_class_example_Delta.m
+    RP = parroblib_create_robot_class('P3RRRRR2G2P2A1', 1, 1);
+    RP.align_base_coupling(2, 0.2);
+    RP.align_platform_coupling(2, 0.15);
+    pn = RP.Leg(1).pkin_names;
+    for k = 1:RP.NLEG
+      pkin = RP.Leg(1).pkin;
+      pkin(strcmp(pn, 'a2')) = 0.25;
+      pkin(strcmp(pn, 'a4')) = 0.7;
+      pkin(strcmp(pn, 'alpha2')) = 0;
+      pkin(strcmp(pn, 'd1')) = 0;
+      pkin(strcmp(pn, 'd2')) = 0;
+      pkin(strcmp(pn, 'd4')) = 0;
+      RP.Leg(k).update_mdh(pkin);
+    end
+    x0 = [0.00;0.00;-0.5; 0; 0; 0];
+    q0ik = [[50; 150; 0; 180; -30]*pi/180; NaN(10,1)];
+    [q0, Phi] = RP.invkin_ser(x0, q0ik);
+    s_plot = struct( 'ks_legs', [], 'ks_platform', [], 'straight', 1);
+    RP.plot(q0, x0, s_plot);
+    name = sprintf('pkm_3dof_delta');
+    ch = get(gca, 'children');
+    delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
+    view([-105, 12])
+  end
+
   %% Finish Plot and Save
   figure_format_publication(gca)
   set(gca, 'Box', 'off');
@@ -94,7 +161,7 @@ for iRob = 1:4
   export_fig(['robot_example_', name, '_r800.png'], '-r800')
 end
 return
-%% Debug: Generate Kinematic Parameters for the Parallel Robot
+%% Debug: Generate Kinematic Parameters for the 3T0R Parallel Robot
 
 Set = cds_settings_defaults(struct('DoF', [1 1 1 0 0 0])); %#ok<UNRCH>
 Traj = cds_gen_traj([1 1 1 0 0 0], 1, Set.task);
