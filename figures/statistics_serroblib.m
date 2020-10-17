@@ -140,10 +140,17 @@ if regen_serrob_table || ~exist(serrob_stat_file, 'file')
           warning('No valid codegen information in file %s', codefile_jj);
           filelist_invalid = [filelist_invalid; {codefile_jj}]; %#ok<AGROW>
         end
+        cc_dbg = infostruct.ComputationalCostDebug;
         cc = infostruct.ComputationalCost;
-        ComputationalCostSum = cc.add+cc.mult+cc.div+cc.fcn+cc.ass;
-        Row_jj = {Name, N, jj, infostruct.DurationCPUTime, ComputationalCostSum, ...
-          infostruct.OptCodeLineCount, infostruct.OptCodeSize, infostruct.FileSize};
+        if any(abs(cc.ass - cc_dbg.ass) > 1)
+          error('Number of assignments strongly diverging');
+        end
+        if any(abs(cc.fcn - cc_dbg.fcn) > 1)
+          error('Number of function calls diverging');
+        end
+        ComputationalCostSum = sum(cc.add+cc.mult+cc.div+cc.fcn+cc.ass);
+        Row_jj = {Name, N, jj, sum(infostruct.DurationCPUTime), ComputationalCostSum, ...
+          sum(infostruct.OptCodeLineCount), sum(infostruct.OptCodeSize), infostruct.FileSize};
         CompEffortTable = [CompEffortTable; Row_jj]; %#ok<AGROW>
       end
     end
