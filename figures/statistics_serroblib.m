@@ -193,6 +193,42 @@ BarMatrixSum = sum(BarMatrix,2);
 save(fullfile(figure_dir, sprintf('statistics_serrob_cputime_data_tmp_%s.mat', matlabfcnmode)));
 BarMatrix_h = BarMatrix / 3600;
 BarMatrixSum_h = BarMatrixSum / 3600;
+
+%% Print additional information
+
+num_Rjoints_prev = 0;
+num_joints_prev = 0;
+for i = 1:length(Robots)
+  num_Rjoints = sum(Robots{i}=='R');
+  num_joints = str2double(Robots{i}(2));
+  print_name = false;
+  if i == 1 || num_joints ~= num_joints_prev
+    print_name = true;
+  end
+  if print_name || num_Rjoints~= num_Rjoints_prev
+    print_name = true;
+  end
+  if print_name
+    fprintf('Starting at number %d (%s): %d joints; %d revolute joints\n', ...
+      i, Robots{i}, num_joints, num_Rjoints);
+  end
+  num_Rjoints_prev = num_Rjoints;
+  num_joints_prev = num_joints;
+end
+
+Robots_find = { ...
+  'S5PRRRR3', ... % (PRRR)(R)
+  'S5PRRRR4', ... % (PRR)(R)(R)
+  'S5PRRRR6'}; ... % (P)(RR)(RR)
+for i = 1:length(Robots_find)
+  I = strcmp(Robots, Robots_find{i});
+  if ~any(I)
+    warning('Robot %s was not found in the symbolic code database', Robots_find{i});
+    continue
+  end
+  fprintf('Robot %s at position %d\n', Robots_find{i}, find(I));
+end
+
 %% Create bar diagram of effort for all models
 t1 = tic();
 figure(1);clf;hold on;
@@ -228,23 +264,20 @@ export_fig(1, fullfile(figure_dir, sprintf('statistics_serrob_cputime_hist_%s.pd
 cd(figure_dir);
 export_fig(sprintf('statistics_serrob_cputime_hist_%s.png', matlabfcnmode), '-r800');
 fprintf('Generated bar diagram figure. Duration: %1.1fs\n', toc(t1));
-% Print additional information
-num_Rjoints_prev = 0;
-num_joints_prev = 0;
-for i = 1:length(Robots)
-  num_Rjoints = sum(Robots{i}=='R');
-  num_joints = str2double(Robots{i}(2));
-  print_name = false;
-  if i == 1 || num_joints ~= num_joints_prev
-    print_name = true;
-  end
-  if print_name || num_Rjoints~= num_Rjoints_prev
-    print_name = true;
-  end
-  if print_name
-    fprintf('Starting at number %d (%s): %d joints; %d revolute joints\n', ...
-      i, Robots{i}, num_joints, num_Rjoints);
-  end
-  num_Rjoints_prev = num_Rjoints;
-  num_joints_prev = num_joints;
-end
+
+% Export area of the bar diagram with the three PRRRR robots highlighted
+xlim([241.5, 244.5]);
+ylim([0, 1.05*max(BarMatrixSum_h(242:244))]);
+set_size_plot_subplot(1,...
+  2,2,gca,...
+  0.0,0.0,0,0,... % bl,br,hu,hd,
+  0,0) % bdx,bdy)
+xlabel('');
+ylabel('');
+ch = get(gcf, 'children');
+delete(ch(strcmp(get(ch, 'Type'), 'legend')));
+grid off;
+set(gca, 'Box', 'off');
+export_fig(1, fullfile(figure_dir, sprintf('statistics_serrob_cputime_hist_%s_detail_PRRRR.pdf', matlabfcnmode)));
+cd(figure_dir);
+export_fig(sprintf('statistics_serrob_cputime_hist_%s_detail_PRRRR.png', matlabfcnmode), '-r800');

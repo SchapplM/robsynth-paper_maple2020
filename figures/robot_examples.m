@@ -8,7 +8,7 @@ clear
 % close all
 figure_dir = fileparts(which('robot_examples.m'));
 
-for iRob = 1:8
+for iRob = 1:10
   f = figure(2);clf;
   hold on;
   grid off;
@@ -150,7 +150,37 @@ for iRob = 1:8
     delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
     view([-105, 12])
   end
-
+  %% Parallel Robot 3 (3RRR)
+  if iRob == 9
+    % Siehe ParRob_class_example_3RRR.m
+    RP = parroblib_create_robot_class('P3RRR1G1P1A1', 1, 0.3);
+    pn = RP.Leg(1).pkin_names;
+    for k = 1:RP.NLEG
+      pkin = zeros(size(RP.Leg(1).pkin));
+      pkin(strcmp(pn, 'a2')) = 0.6;
+      pkin(strcmp(pn, 'a3')) = 0.6;
+      RP.Leg(k).update_mdh(pkin);
+    end
+    x0 = [ [0.0;0.0;0.0]; [0;0;0]*pi/180 ];
+    q0ik = [[30;100;-140]*pi/180; NaN(6,1)];
+    [q0, Phi] = RP.invkin_ser(x0, q0ik);
+    s_plot = struct( 'ks_legs', [], 'ks_platform', [], 'straight', 1);
+    RP.plot(q0, x0, s_plot);
+    name = sprintf('pkm_3dof_planar');
+    ch = get(gca, 'children');
+    delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
+  end
+  %% Parallel Robot 4 (6UPS)
+  if iRob == 10
+    RP = parroblib_create_robot_class('P6RRPRRR14V3G1P4A1', 0.5, 0.2);
+    x0 = [ [0.15;0.05;0.5]; [10;-10;5]*pi/180 ];
+    [q0, Phi] = RP.invkin_ser(x0, rand(RP.NJ,1));
+    s_plot = struct( 'ks_legs', [], 'ks_platform', [], 'straight', 0);
+    RP.plot(q0, x0, s_plot);
+    name = sprintf('pkm_6dof_hexapod');
+    ch = get(gca, 'children');
+    delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
+  end
   %% Finish Plot and Save
   figure_format_publication(gca)
   set(gca, 'Box', 'off');

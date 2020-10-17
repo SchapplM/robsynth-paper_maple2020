@@ -187,7 +187,20 @@ for i = 1:length(Robots)
   end
   i_DoF_prev = i_DoF;
 end
-
+Robots_find = { ...
+  'P3RRR1G1P1A1', ... % from robot_examples.m (pkm_3dof_planar)
+  'P3PRRRR8V2G4P2A1', ... % from robot_examples.m (pkm_3dof)
+  'P6PRRRRR6V2G8P4A1', ...% PRRS from ITFToM DACH 2020
+  'P6RRPRRR14V3G1P4A1', ... % 6UPS from robot_examples.m (pkm_6dof_hexapod)
+  'P6RRRRRR10V3G1P1A1'}; % RRRS from ITFToM DACH 2020
+for i = 1:length(Robots_find)
+  I = strcmp(Robots, Robots_find{i}(1:end-4));
+  if ~any(I)
+    warning('Robot %s was not found in the symbolic code database', Robots_find{i});
+    continue
+  end
+  fprintf('Robot %s at position %d\n', Robots_find{i}, find(I));
+end
 %% Create bar diagram of effort for all models
 t1 = tic();
 figure(2);clf;hold on;
