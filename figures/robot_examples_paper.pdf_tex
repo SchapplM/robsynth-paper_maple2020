@@ -1,0 +1,116 @@
+%% Creator: Inkscape inkscape 0.92.3, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'robot_examples_paper.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{345.82677165bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.28688525)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{robot_examples_paper.pdf}}%
+    \put(0.07471904,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{a}) 6-DoF\end{tabular}}}}%
+    \put(0.47810017,0.04477951){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{b}) 4-DoF\end{tabular}}}}%
+    \put(0.83375649,0.04532705){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}(\textbf{c}) 3-DoF\end{tabular}}}}%
+    \put(0.0750579,0.01386514){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}industrial robot\end{tabular}}}}%
+    \put(0.47910263,0.01425709){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}robot palletizer\end{tabular}}}}%
+    \put(0.83504134,0.01425794){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}parallel robot\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{robot_examples_paper.pdf}}%
+    \put(0.04385739,0.09296891){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{robot_examples_paper.pdf}}%
+    \put(0.08919429,0.13138257){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_2$\end{tabular}}}}%
+    \put(0.09461608,0.19605661){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_3$\end{tabular}}}}%
+    \put(0.10468512,0.21580731){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_4$\end{tabular}}}}%
+    \put(0.15890301,0.25956892){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_5$\end{tabular}}}}%
+    \put(0.16006483,0.2165819){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_6$\end{tabular}}}}%
+    \put(0.36354556,0.01548264){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{robot_examples_paper.pdf}}%
+    \put(0.38402001,0.06897184){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_4,q_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{robot_examples_paper.pdf}}%
+    \put(0.29070368,0.03693034){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_3$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{robot_examples_paper.pdf}}%
+    \put(0.57669908,0.16945299){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_4$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{robot_examples_paper.pdf}}%
+    \put(0.25177053,0.19838007){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_7$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{robot_examples_paper.pdf}}%
+    \put(0.31271402,0.08552948){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_5$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{robot_examples_paper.pdf}}%
+    \put(0.28366871,0.25236571){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_8$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{robot_examples_paper.pdf}}%
+    \put(0.36189738,0.23865634){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_6$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{robot_examples_paper.pdf}}%
+    \put(0.53224725,0.25880916){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_9$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{robot_examples_paper.pdf}}%
+    \put(0.49976576,0.16801819){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{robot_examples_paper.pdf}}%
+    \put(0.40844733,0.16275158){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_1,\theta_3$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{robot_examples_paper.pdf}}%
+    \put(0.73527675,0.27162252){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{robot_examples_paper.pdf}}%
+    \put(0.67376337,0.22949479){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{robot_examples_paper.pdf}}%
+    \put(0.64418842,0.15610522){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_3$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{robot_examples_paper.pdf}}%
+    \put(0.68184649,0.08543474){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_4$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{robot_examples_paper.pdf}}%
+    \put(0.67713751,0.03268101){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_5$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{robot_examples_paper.pdf}}%
+    \put(0.81151882,0.2643384){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{robot_examples_paper.pdf}}%
+    \put(0.84567596,0.22525676){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_6$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{robot_examples_paper.pdf}}%
+    \put(0.87348197,0.17684809){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta_7$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{robot_examples_paper.pdf}}%
+    \put(0.76711162,0.2168143){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$q_3$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{robot_examples_paper.pdf}}%
+    \put(0.15460435,0.1888685){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\bm{x}$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{robot_examples_paper.pdf}}%
+    \put(0.54975681,0.1425893){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\bm{x}$\end{tabular}}}}%
+    \put(0.76524632,0.01287764){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\bm{x}$\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

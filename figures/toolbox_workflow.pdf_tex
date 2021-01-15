@@ -1,0 +1,73 @@
+%% Creator: Inkscape inkscape 0.92.3, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'toolbox_workflow.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{342.99212598bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.07024793)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.01225387,0.04047623){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}1: Define\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{toolbox_workflow.pdf}}%
+    \put(0.01225387,0.01095689){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Input\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{toolbox_workflow.pdf}}%
+    \put(0.21728175,0.04047623){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}2: Process\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{toolbox_workflow.pdf}}%
+    \put(0.21728175,0.01095689){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Worksheets\end{tabular}}}}%
+    \put(0.44572974,0.04047623){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}3: Post-\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{toolbox_workflow.pdf}}%
+    \put(0.44572974,0.01095689){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Process\end{tabular}}}}%
+    \put(0.64662472,0.04047623){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}4: Perform\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{toolbox_workflow.pdf}}%
+    \put(0.64662472,0.01095689){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Unit Tests\end{tabular}}}}%
+    \put(0.88090745,0.04047623){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}5: Use\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{toolbox_workflow.pdf}}%
+    \put(0.88143226,0.01095689){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Models\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

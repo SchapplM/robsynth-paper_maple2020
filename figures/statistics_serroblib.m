@@ -1,4 +1,4 @@
-% Figure for comparing computational effort for parallel robot models
+% Gather data for comparing computational effort for serial robot models
 
 % Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2020-10
 % (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
@@ -6,9 +6,8 @@
 clc
 clear
 
-matlabfcnmode = 'full'; % other: 'simple'
-regen_serrob_table = false; % switch for force re-counting of computational effort in serial robot database
-only_reduced_figure = false; % switch for only plottin a few bars in the diagram for quick preview
+matlabfcnmode = 'dyncmp'; % modes: 'simple', 'dyncmp', 'full'
+regen_serrob_table = true; % switch for force re-counting of of the serial robot database
 serrobpath = fileparts(which('serroblib_path_init.m'));
 if isempty(serrobpath)
   warning('Repository with serial robot models not in path. Abort.');
@@ -28,8 +27,13 @@ end
 % go through all models and all code files
 % assess computational cost of all matlab functions
 % save everything in a mat file
+codefilenames_sp = {{'inertia_sympybotics',3},{'coriolisvec_sympybotics', 4}...
+                 {'gravload_sympybotics',5},{'invdyn_sympybotics',6},...
+                 {'coriolismat_sympybotics',7},{'invdyn_reg_sympybotics',NaN}};
+codefilenames_sy = {{'fkine_symoro',1},{'invdyn_symoro',6}};
+
 if strcmp(matlabfcnmode, 'simple')
-  codefilenames = { ...
+  codefilenames_hd = { ...
     {'fkine_fixb_rotmat_mdh_sym_varpar', 1}...
     {'joint_trafo_rotmat_mdh_sym_varpar', 1}, ...
     {'jacobig_rot_sym_varpar', 1}, ...
@@ -43,8 +47,12 @@ if strcmp(matlabfcnmode, 'simple')
     {'gravloadJ_floatb_twist_mdp_slag_vp', 5}, ...
     {'invdynJ_fixb_mdp_slag_vp', 6}, ...
     {'coriolismatJ_fixb_regmin_slag_vp', 7}};
+elseif strcmp(matlabfcnmode, 'dyncmp')
+  codefilenames_hd = { ...
+    {'invdynJ_fixb_mdp_slag_vp', 6}, ...
+    {'invdynJ_fixb_snew_vp2', 6}};
 else
-  codefilenames = { ...
+  codefilenames_hd = { ...
     {'coriolismatJ_fixb_reg2_slag_vp', 7}, ...
     {'coriolismatJ_fixb_regmin_slag_vp', 7}, ...
     {'coriolismatJ_fixb_slag_vp1', 7}, ...
@@ -108,7 +116,9 @@ serrob_stat_file = fullfile(figure_dir, sprintf('statistics_serroblib_%s.mat',ma
 if regen_serrob_table || ~exist(serrob_stat_file, 'file')
   head_row = {'Name', 'NumDoF', 'CodeFile', 'DurationCPUTime', 'ComputationalCostSum', ...
     'OptCodeLineCount', 'OptCodeSize', 'FileSize'};
-  CompEffortTable = cell2table(cell(0,length(head_row)), 'VariableNames', head_row);
+  CompEffortTable_sp = cell2table(cell(0,length(head_row)), 'VariableNames', head_row);
+  CompEffortTable_sy = cell2table(cell(0,length(head_row)), 'VariableNames', head_row);
+  CompEffortTable_hd = cell2table(cell(0,length(head_row)), 'VariableNames', head_row);
   filelist_invalid = {};
   for N = 1:7
     dir_Ndof = fullfile(serrobpath, sprintf('mdl_%ddof', N));
@@ -124,14 +134,16 @@ if regen_serrob_table || ~exist(serrob_stat_file, 'file')
     if ~all(intersect(I_sortrotJ, I) == I)
       error('Error sorting the robots regarding number of revolute joints');
     end
-    % l.Names_Ndof
     fprintf('Go through serial robot models with %d DoF (%d robots).\n', N, length(I));
     for ii = I_sortrotJ(:)'
       Name = l.Names_Ndof{ii};
+      % Debug: Only check one robot for testing
+      % if ~strcmp(Name, 'S4PRPR1'), continue; end
       fprintf('%s\n', Name);
+      %% Read Information for Function files of Proposed Dynamics Toolbox
       codedir = fullfile(dir_Ndof, Name, 'hd');
-      for jj = 1:length(codefilenames)
-        codefile_jj = fullfile(codedir, [Name, '_', codefilenames{jj}{1}, '.m']);
+      for jj = 1:length(codefilenames_hd)
+        codefile_jj = fullfile(codedir, [Name, '_', codefilenames_hd{jj}{1}, '.m']);
         if ~exist(codefile_jj, 'file')
           continue
         end
@@ -140,151 +152,73 @@ if regen_serrob_table || ~exist(serrob_stat_file, 'file')
           warning('No valid codegen information in file %s', codefile_jj);
           filelist_invalid = [filelist_invalid; {codefile_jj}]; %#ok<AGROW>
         end
-        cc_dbg = infostruct.ComputationalCostDebug;
-        cc = infostruct.ComputationalCost;
-        if any(abs(cc.ass - cc_dbg.ass) > 1)
-          error('Number of assignments strongly diverging');
+        cc = infostruct.ComputationalCostDebug;
+        cc_maple = infostruct.ComputationalCost;
+        if any(abs(cc_maple.ass - cc.ass) > 1)
+          error('Number of assignments strongly diverging between Matlab/Maple');
         end
-        if any(abs(cc.fcn - cc_dbg.fcn) > 1)
-          error('Number of function calls diverging');
+        if any(abs(cc_maple.fcn - cc.fcn) > 1)
+          error('Number of function calls diverging between Matlab/Maple');
         end
+        % Use the count of operations in Matlab instead of the counting
+        % from Maple code generation to have the same counting method for
+        % all toolboxes
         ComputationalCostSum = sum(cc.add+cc.mult+cc.div+cc.fcn+cc.ass);
         Row_jj = {Name, N, jj, sum(infostruct.DurationCPUTime), ComputationalCostSum, ...
           sum(infostruct.OptCodeLineCount), sum(infostruct.OptCodeSize), infostruct.FileSize};
-        CompEffortTable = [CompEffortTable; Row_jj]; %#ok<AGROW>
+        CompEffortTable_hd = [CompEffortTable_hd; Row_jj]; %#ok<AGROW>
+      end
+      %% Read Information for Function files of Other Toolboxes
+      for tb = 1:2
+        if tb == 1, codename = codefilenames_sp; cdir='sp';  % SymPyBotics
+        else,       codename = codefilenames_sy; cdir='sy'; end % Symoro
+        code_dir = fullfile(serrobpath, sprintf('mdl_%ddof', N), Name, cdir);
+        for  jj = 1: length(codename)
+          codefile_jj = fullfile(code_dir, [Name, '_', codename{jj}{1},'.m']);
+          if ~exist(codefile_jj, 'file')
+            continue;
+          end
+          infostruct = count_operations_in_matlabfcn(codefile_jj);
+          cc = infostruct.ComputationalCost;
+          ComputationalCostSum = sum(cc.add+cc.mult+cc.div+cc.fcn+cc.ass);
+          Row_jj = {Name, N, jj, NaN, ComputationalCostSum, ...
+            NaN, NaN, infostruct.FileSize};
+          if tb == 1
+            CompEffortTable_sp = [CompEffortTable_sp; Row_jj]; %#ok<AGROW>
+          else
+            CompEffortTable_sy = [CompEffortTable_sy; Row_jj]; %#ok<AGROW>
+          end
+        end
       end
     end
   end
-  save(serrob_stat_file, 'CompEffortTable', 'filelist_invalid');
-%   serrob_stat_file = fullfile(figure_dir, sprintf('statistics_serroblib_%s.mat',matlabfcnmode));
+  save(serrob_stat_file, 'CompEffortTable_hd', 'CompEffortTable_sp', ...
+    'CompEffortTable_sy', 'filelist_invalid');
   writecell(filelist_invalid, fullfile(figure_dir, 'statistics_serroblib_files_invalid.txt'));
 else
-  load(serrob_stat_file, 'CompEffortTable', 'filelist_invalid');
+  load(serrob_stat_file, 'CompEffortTable_hd', 'CompEffortTable_sp', ...
+    'CompEffortTable_sy', 'filelist_invalid');
 end
 
 %% Group code files into categories
 % By doing this here, the categories can be changed afterwards without
 % having to parse the whole database again.
-codefilecategories = NaN(length(codefilenames),1);
-for i = 1:length(codefilenames)
-  codefilecategories(i) = codefilenames{i}{2};
+codefilecategories = NaN(length(codefilenames_hd),1);
+for i = 1:length(codefilenames_hd)
+  codefilecategories(i) = codefilenames_hd{i}{2};
 end
-% Append categories to table
-CompEffortTable = addvars(CompEffortTable, NaN(size(CompEffortTable,1),1), 'After', 3);
-CompEffortTable.Properties.VariableNames(4) = {'FileCategory'};
-for i = 1:length(codefilenames)
-  I = CompEffortTable.CodeFile == i;
-  CompEffortTable.FileCategory(I) = codefilecategories(i);
+% Append categories to table (if not already existing from multiple runs)
+if ~any(strcmp('FileCategory', CompEffortTable_hd.Properties.VariableNames))
+  CompEffortTable_hd = addvars(CompEffortTable_hd, NaN(size(CompEffortTable_hd,1),1), 'After', 3);
+  CompEffortTable_hd.Properties.VariableNames(4) = {'FileCategory'};
 end
-
-%% Output statistics information to put in the presentation
-I = CompEffortTable.NumDoF < 7 & CompEffortTable.NumDoF > 2;
-Robots = unique(CompEffortTable.Name(I),'stable');
-fprintf('%d unique serial kinematic structures in database\n', length(Robots));
-fprintf('%1.1f days of CPU time to generate all functions in the database\n', ...
-  sum(CompEffortTable.DurationCPUTime(:), 'omitnan')/(3600*24));
-fprintf('%d automatically generated files\n', size(CompEffortTable,1));
-fprintf('%d lines auf automatically generated code (%1.1f MB)\n', ...
-  sum(CompEffortTable.OptCodeLineCount(:)), sum(CompEffortTable.OptCodeSize(:))/1024^2);
-
-% Create bar heights for histogram.
-BarMatrix = NaN(length(Robots), max(codefilecategories));
-for i = 1:length(Robots)
-  I_Robi = strcmp(CompEffortTable.Name, Robots{i});
-  for j = 1:max(codefilecategories)
-    I_catj = CompEffortTable.FileCategory == j;
-    BarMatrix(i,j) = sum(CompEffortTable.DurationCPUTime(I_Robi&I_catj), 'omitnan');
-  end
-end
-BarMatrixSum = sum(BarMatrix,2);
-save(fullfile(figure_dir, sprintf('statistics_serrob_cputime_data_tmp_%s.mat', matlabfcnmode)));
-BarMatrix_h = BarMatrix / 3600;
-BarMatrixSum_h = BarMatrixSum / 3600;
-
-%% Print additional information
-
-num_Rjoints_prev = 0;
-num_joints_prev = 0;
-for i = 1:length(Robots)
-  num_Rjoints = sum(Robots{i}=='R');
-  num_joints = str2double(Robots{i}(2));
-  print_name = false;
-  if i == 1 || num_joints ~= num_joints_prev
-    print_name = true;
-  end
-  if print_name || num_Rjoints~= num_Rjoints_prev
-    print_name = true;
-  end
-  if print_name
-    fprintf('Starting at number %d (%s): %d joints; %d revolute joints\n', ...
-      i, Robots{i}, num_joints, num_Rjoints);
-  end
-  num_Rjoints_prev = num_Rjoints;
-  num_joints_prev = num_joints;
+for i = 1:length(codefilenames_hd)
+  I = CompEffortTable_hd.CodeFile == i;
+  CompEffortTable_hd.FileCategory(I) = codefilecategories(i);
 end
 
-Robots_find = { ...
-  'S5PRRRR3', ... % (PRRR)(R)
-  'S5PRRRR4', ... % (PRR)(R)(R)
-  'S5PRRRR6'}; ... % (P)(RR)(RR)
-for i = 1:length(Robots_find)
-  I = strcmp(Robots, Robots_find{i});
-  if ~any(I)
-    warning('Robot %s was not found in the symbolic code database', Robots_find{i});
-    continue
-  end
-  fprintf('Robot %s at position %d\n', Robots_find{i}, find(I));
-end
-
-%% Create bar diagram of effort for all models
-t1 = tic();
-figure(1);clf;hold on;
-legbarhdl = NaN(max(codefilecategories), 1);
-Farben = {'r', 'g', 'b', 'c', 'm', 'y', 'k'};
-legentries = {'kinematics', 'energy', 'inertia', 'coriolis vec.', 'gravload.', 'invdyn', 'coriolis mat.'};
-if only_reduced_figure
-  I_Rob = 1:20:length(Robots); %#ok<UNRCH>
-else
-  I_Rob = 1:length(Robots);
-end
-for i = I_Rob
-  barheight_i = sum(BarMatrix_h(i,:));
-  for j = max(codefilecategories):-1:1
-    legbarhdl(j) = bar(i, barheight_i);
-    set(legbarhdl(j), 'EdgeColor', 'none', 'FaceColor', Farben{j});
-    barheight_i = barheight_i - BarMatrix_h(i,j);
-  end
-end
-grid on;
-xlabel('Running number of robot kinematics');
-ylabel('CPU time for codegen. in h');
-l1hdl = legend(legbarhdl, legentries, 'location', 'northoutside', 'orientation', 'horizontal');
-figure_format_publication()
-set_size_plot_subplot(1,...
-  22,4.5,gca,...
-  0.07,0.01,0.13,0.18,... % bl,br,hu,hd,
-  0,0) % bdx,bdy)
-set(l1hdl, 'position', [0.15    0.92    0.70    0.05], ...
-  'orientation', 'horizontal');
-saveas(1,     fullfile(figure_dir, sprintf('statistics_serrob_cputime_hist_%s.fig', matlabfcnmode)));
-export_fig(1, fullfile(figure_dir, sprintf('statistics_serrob_cputime_hist_%s.pdf', matlabfcnmode)));
-cd(figure_dir);
-export_fig(sprintf('statistics_serrob_cputime_hist_%s.png', matlabfcnmode), '-r800');
-fprintf('Generated bar diagram figure. Duration: %1.1fs\n', toc(t1));
-
-% Export area of the bar diagram with the three PRRRR robots highlighted
-xlim([241.5, 244.5]);
-ylim([0, 1.05*max(BarMatrixSum_h(242:244))]);
-set_size_plot_subplot(1,...
-  2,2,gca,...
-  0.0,0.0,0,0,... % bl,br,hu,hd,
-  0,0) % bdx,bdy)
-xlabel('');
-ylabel('');
-ch = get(gcf, 'children');
-delete(ch(strcmp(get(ch, 'Type'), 'legend')));
-grid off;
-set(gca, 'Box', 'off');
-export_fig(1, fullfile(figure_dir, sprintf('statistics_serrob_cputime_hist_%s_detail_PRRRR.pdf', matlabfcnmode)));
-cd(figure_dir);
-export_fig(sprintf('statistics_serrob_cputime_hist_%s_detail_PRRRR.png', matlabfcnmode), '-r800');
+%% Save file again (with added information)
+serrob_stat_file = fullfile(figure_dir, sprintf('statistics_serroblib_%s.mat',matlabfcnmode));
+save(serrob_stat_file, 'CompEffortTable_hd', 'CompEffortTable_sp', ...
+  'CompEffortTable_sy', 'filelist_invalid', 'codefilecategories');
+fprintf('Parsed database and saved everything to %s\n', serrob_stat_file);

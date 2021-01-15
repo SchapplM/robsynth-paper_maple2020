@@ -1,0 +1,97 @@
+%% Creator: Inkscape inkscape 0.92.3, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'test_coverage_serrob.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{342.99212598bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.29752066)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{test_coverage_serrob.pdf}}%
+    \put(0.01203741,0.12704759){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_kin}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{test_coverage_serrob.pdf}}%
+    \put(0.01203741,0.09315483){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Kinematics\end{tabular}}}}%
+    \put(0.20813243,0.12704759){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_diffkin}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{test_coverage_serrob.pdf}}%
+    \put(0.20813243,0.09315483){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Velocity\end{tabular}}}}%
+    \put(0.85756419,0.17078046){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_cutforceint}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{test_coverage_serrob.pdf}}%
+    \put(0.85756419,0.13688756){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Cut Force\end{tabular}}}}%
+    \put(0.38939337,0.10955448){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Energy\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{test_coverage_serrob.pdf}}%
+    \put(0.60587061,0.1554739){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Acceleration\end{tabular}}}}%
+    \put(0.51426187,0.08768823){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_dyn_tau}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{test_coverage_serrob.pdf}}%
+    \put(0.51426187,0.05379533){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Dynamics\end{tabular}}}}%
+    \put(0.51426187,0.02011055){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}(Lagrange)\end{tabular}}}}%
+    \put(0.7219926,0.08768823){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_dyn_tau}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{test_coverage_serrob.pdf}}%
+    \put(0.7219926,0.05379533){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Dynamics\end{tabular}}}}%
+    \put(0.7219926,0.02011055){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}(Newton-Euler)\end{tabular}}}}%
+    \put(0.38939339,0.26263003){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Property \ref{prop:ser_cutforceext}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{test_coverage_serrob.pdf}}%
+    \put(0.38939339,0.22873727){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Jacobian\end{tabular}}}}%
+    \put(0.38939339,0.1951567){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}and Force\end{tabular}}}}%
+    \put(0.01187212,0.26263003){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Test \ref{test:ser_kin}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{test_coverage_serrob.pdf}}%
+    \put(0.01187212,0.22873727){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Kinematics\end{tabular}}}}%
+    \put(0.20813243,0.26263003){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Test \ref{test:ser_diffkin}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{test_coverage_serrob.pdf}}%
+    \put(0.20813243,0.22873727){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Diff. Kin.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{test_coverage_serrob.pdf}}%
+    \put(0.56892784,0.26261921){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Test \ref{test:ser_dyn_tau},\,\ref{test:ser_dyn_cormat},\,\ref{test:ser_dyn_inertiaD}.\end{tabular}}}}%
+    \put(0.56892784,0.22872645){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Dynamics\end{tabular}}}}%
+    \put(0.00914829,0.01297308){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Test \ref{test:ser_dyn_inertia_ekin},\,\ref{test:ser_dyn_energy}. Dynamics and Energy\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{test_coverage_serrob.pdf}}%
+    \put(0.80508483,0.26263003){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Test \ref{test:ser_dynjacobi}.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{test_coverage_serrob.pdf}}%
+    \put(0.80508483,0.22873727){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}Cut Forces\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{test_coverage_serrob.pdf}}%
+  \end{picture}%
+\endgroup%

@@ -7,8 +7,9 @@ clc
 clear
 % close all
 figure_dir = fileparts(which('robot_examples.m'));
+debug_coordinates = false;
 
-for iRob = 1:10
+for iRob = 1:11
   f = figure(2);clf;
   hold on;
   grid off;
@@ -22,14 +23,17 @@ for iRob = 1:10
   if iRob == 1
     % See systems/palh1m1/palh1m1_test.m
     % in https://github.com/SchapplM/robsynth-serhybroblib
-    RS_TE = hybroblib_create_robot_class('palh1m1', 'TE', 'palh1m1Bsp1');
-    % Mark passive joints as active because they graphically overlap the
-    % existing active joints at the same position.
-    RS_TE.MDH.mu(8) = true;
-    RS_TE.MDH.mu(6) = true;
-    q = RS_TE.qref;
+    RS = hybroblib_create_robot_class('palh1m1', 'TE', 'palh1m1Bsp1');
+    if ~debug_coordinates
+      % Mark passive joints as active because they graphically overlap the
+      % existing active joints at the same position.
+      RS.MDH.mu(8) = true;
+      RS.MDH.mu(6) = true;
+    end
+    RS.update_EE([0;0;0.2]);
+    q = RS.qref;
     s_plot = struct( 'ks', [], 'straight', 0);
-    RS_TE.plot( q, s_plot );
+    RS.plot( q, s_plot );
     view([-20, 20])
     name = sprintf('palletizer_3d_3loops');
   end
@@ -37,12 +41,17 @@ for iRob = 1:10
   if iRob == 2
     % See systems/palh1m1/palh1m1_test.m
     % in https://github.com/SchapplM/robsynth-serhybroblib
-    RS_TE = hybroblib_create_robot_class('palh3m1', 'TE', 'palh3m1Bsp1');
+    RS = hybroblib_create_robot_class('palh3m1', 'TE', 'palh3m1Bsp1');
     % Mark passive joints as active because of graphically overlapping
-    RS_TE.MDH.mu(7) = true;
-    q = RS_TE.qref;
+    RS.MDH.mu(7) = true;
+    % make robot smaller to increase joint size
+    pkin_new = RS.pkin;%
+    pkin_new(1:end-5) = RS.pkin(1:end-5)*0.5; % last 5 are length params
+    RS.update_mdh(pkin_new);
+    RS.update_EE([0;0;0.1]);
+    q = RS.qref;
     s_plot = struct( 'ks', [], 'straight', 0);
-    RS_TE.plot( q, s_plot );
+    RS.plot( q, s_plot );
     view([-20, 20])
     name = sprintf('palletizer_3d_2loops');
   end
@@ -60,6 +69,7 @@ for iRob = 1:10
   %% Serial Industrial Robot
   if iRob == 4
     RS = serroblib_create_robot_class('S6RRRRRR10V2', 'S6RRRRRR10V2_KUKA1');
+    RS.update_EE([0;0;-0.1]);
     s_plot = struct( 'ks', [], 'straight', 0);
     q = [0; 90; 0; 0; 90; 0]*pi/180;
     RS.plot( q, s_plot );
@@ -180,6 +190,56 @@ for iRob = 1:10
     name = sprintf('pkm_6dof_hexapod');
     ch = get(gca, 'children');
     delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
+  end
+  %% Parallel Robot with hybrid Leg Chains
+  if iRob == 11
+    % Definition, see ParRob_class_example_hybBKspatial.m (robotics repo)
+    RS = hybroblib_create_robot_class('hybBKspatial', '', 'hybBKspatialBsp1');
+    RS.DesPar.joint_type(6:8) = 3;
+    RS.update_mdh(RS.pkin*0.25);
+    RP = ParRob('P2FB1');
+    RP.create_symmetric_robot(3, RS, 0.75, 0.5);
+    for i = 1:3
+      phi_W_0_neu = RP.Leg(i).phi_W_0 - [0;0;pi];
+      R_tmp = eulxyz2r(phi_W_0_neu) * rotz(-pi/2);
+      RP.Leg(i).update_base([], r2eulxyz(R_tmp));
+    end
+    phi_z = -RP.Leg(1).phi_W_0(2);
+    RP.Leg(1).update_EE(zeros(3,1), [3*pi/2;0;phi_z-pi/2])
+    phi_z = -RP.Leg(2).phi_W_0(2);
+    RP.Leg(2).update_EE(zeros(3,1), [3*pi/2;0;phi_z+150/180*pi])
+    phi_z = -RP.Leg(3).phi_W_0(2);
+    RP.Leg(3).update_EE(zeros(3,1), [-pi/2;0;phi_z+30/180*pi])
+    RP.initialize();
+    % Index der aktiven (und damit unabhängigen Gelenke)
+    RP.update_actuation(logical(repmat([1 0 1 0 0 0]',3,1)));
+    RP.update_EE_FG(logical([1 1 1 1 1 1])); % Für IK der PKM
+    RP.fill_fcn_handles(false, false);
+    x0 = [ 0.25*[0.01;0.01;5]; [20;-10;0]*pi/180 ];
+    q0ik = [0 ;180; 90; 0 ; 0; 0; 0 ;180; 90; 0 ; 0; 0; 0 ;180; 90; 0 ; 0; 0;]*pi/180;
+    [q0, Phi] = RP.invkin_ser(x0, q0ik);
+    s_plot = struct( 'ks_legs', [], 'ks_platform', [], 'straight', 0);
+    RP.plot(q0, x0, s_plot);
+    name = sprintf('pkm_hybridleg');
+    ch = get(gca, 'children');
+    delete(ch(strcmp(get(ch, 'type'), 'hgtransform'))) % delete frame
+    view(48,21);
+  end
+  %% Debug
+  if debug_coordinates && iRob < 7 % only for serial robots
+    Tc = RS.fkine(q);
+    posminmax = minmax2(squeeze(Tc(1:3,4,:)));
+    for i = 1:RS.NJ
+      j = i+1;
+      rv_ann = eulxyz2r(rand(3,1))*diff(posminmax')'/20;
+      text(Tc(1,4,j)+rv_ann(1),Tc(2,4,j)+rv_ann(2), ...
+           Tc(3,4,j)+rv_ann(3),sprintf('q_{%d}', i));
+      plot3([Tc(1,4,j); Tc(1,4,j)+rv_ann(1)], ...
+            [Tc(2,4,j); Tc(2,4,j)+rv_ann(2)], ...
+            [Tc(3,4,j); Tc(3,4,j)+rv_ann(3)], 'k-');
+      fprintf('Joint %d. active: %d\n', i, RS.MDH.mu(i));
+    end
+    continue % do not save in debug mode
   end
   %% Finish Plot and Save
   figure_format_publication(gca)
