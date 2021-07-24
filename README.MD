@@ -9,13 +9,13 @@ This code is supplemental material to the following submission to the Maple Conf
 ```bib
 @InProceedings{SchapplerJobOrt2021,
   author    = {Schappler, Moritz and Job, Tim-David and Ortmaier, Tobias},
-  title     = {A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots},
   booktitle = {Maple in Mathematics Education and Research},
-  year={2021},
+  title     = {A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots},
+  year      = {2021},
   publisher = {Springer International Publishing},
+  doi       = {10.1007/978-3-030-81698-8_23},
 }
 ```
-
 
 ## Contents and Useage
 
